@@ -22,6 +22,7 @@ function startServer(port = process.env.PORT || 3008) {
   const express = require('express');
   const app = express();
   app.use(express.json());
+  app.use(express.static(require('path').join(__dirname, 'public')));
   const { audit } = wireEnterpriseExpress(app, 'task8-redis-queue-cache-cognitive');
   const brain = new CognitiveDecisionEngine(audit, { hitlThreshold: 0.85 });
   const cache = new TtlCache(30000);

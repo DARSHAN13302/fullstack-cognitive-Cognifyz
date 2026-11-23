@@ -54,6 +54,7 @@ function startServer(port = process.env.PORT || 3006) {
   const express = require('express');
   const app = express();
   app.use(express.json());
+  app.use(express.static(require('path').join(__dirname, 'public')));
   const { audit } = wireEnterpriseExpress(app, 'task6-database-jwt-rbac');
   const users = new Map();
 

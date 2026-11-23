@@ -54,6 +54,7 @@ function problemDetails(status, title, detail) {
 function startServer(port = process.env.PORT || 3007) {
   const express = require('express');
   const app = express();
+  app.use(express.static(require('path').join(__dirname, 'public')));
   const limiter = new SlidingWindowRateLimiter(30, 60000);
   const breaker = new CircuitBreaker(3, 15000);
   wireEnterpriseExpress(app, 'task7-oauth-external-api-ratelimit');

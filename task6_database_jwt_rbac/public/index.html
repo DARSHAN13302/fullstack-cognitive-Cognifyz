@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Task 6 | Authentication, JWT and RBAC</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,Segoe UI,Arial,sans-serif;background:#07111f;color:#e5edf7}*{box-sizing:border-box}body{margin:0;padding:32px 16px;background:radial-gradient(circle at top right,#12304b,#07111f 55%)}main{max-width:920px;margin:auto}.top,.panel{background:#101d2d;border:1px solid #29415a;border-radius:16px;padding:22px;margin-bottom:16px}.eyebrow{color:#63d8c4;font-weight:700;letter-spacing:.12em;font-size:12px}h1{margin:8px 0;font-size:clamp(26px,4vw,38px)}p{color:#a9bbcf;line-height:1.6}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.field{display:grid;gap:7px;margin:12px 0}label{color:#b8cadb;font-size:13px}input{width:100%;background:#081522;border:1px solid #38536e;border-radius:9px;padding:12px;color:#fff}button{background:#157a76;border:0;border-radius:9px;padding:12px 16px;color:white;font-weight:700;cursor:pointer}button.secondary{background:#29415a}pre{background:#06101b;color:#9ef4cf;border:1px solid #29415a;border-radius:10px;padding:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:52px;font-size:12px}.status{font-weight:700}.note{border-left:3px solid #e0ad4c;padding:10px 14px;background:#251e10;color:#f7dca5;border-radius:6px;font-size:13px}a{color:#63d8c4}
+</style>
+</head>
+<body><main>
+<section class="top"><div class="eyebrow">TASK 06 · SECURITY ENGINEERING</div><h1>Authentication, JWT & Role-Based Access</h1><p>Register a demo viewer, authenticate with a signed JWT, test a protected admin resource, log out, and verify token revocation. Results are shown on this page.</p><div class="note">Demo implementation: users and revoked-token identifiers are held in process memory. Use test credentials only. The registration endpoint must be hardened before production use.</div></section>
+<section class="panel">
+<h2>1. Demo account</h2><div class="grid">
+<div class="field"><label for="email">Email</label><input id="email" type="email"></div>
+<div class="field"><label for="password">Password (minimum 8 characters)</label><input id="password" type="password" value="ViewerDemo!2026"></div>
+</div><button id="run">Run complete authentication demo</button> <button class="secondary" id="clear">Clear results</button>
+</section>
+<section class="panel"><h2>2. Live execution results</h2><p class="status" id="summary">Ready. Run the demonstration above.</p>
+<h3>Register</h3><pre id="register">Not run</pre>
+<h3>Login and JWT</h3><pre id="login">Not run</pre>
+<h3>RBAC — viewer attempts admin-only audit</h3><pre id="rbac">Not run</pre>
+<h3>Logout and revoke token</h3><pre id="logout">Not run</pre>
+<h3>Replay revoked token</h3><pre id="replay">Not run</pre>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function show(id,status,data){$(id).textContent="HTTP "+status+"\n"+JSON.stringify(data,null,2)}
+async function call(url,method="GET",body,token){const options={method,headers:{}};if(body!==undefined){options.headers["Content-Type"]="application/json";options.body=JSON.stringify(body)}if(token)options.headers.Authorization="Bearer "+token;const res=await fetch(url,options);let data;try{data=await res.json()}catch{data={message:await res.text()}}return {status:res.status,data}}
+$("email").value="viewer-demo-"+Date.now()+"@example.test";
+$("run").onclick=async()=>{
+ const email=$("email").value.trim(),password=$("password").value;
+ $("summary").textContent="Running…";
+ try{
+  const reg=await call("/api/auth/register","POST",{email,password});
+  show("register",reg.status,reg.data);
+  if(reg.status!==201||!reg.data.registered)throw new Error("Registration failed; inspect the register result.");
+  const login=await call("/api/auth/login","POST",{email,password});
+  if(login.status!==200||!login.data.token){show("login",login.status,login.data);throw new Error("Login failed; inspect the login result.")}
+  const token=login.data.token;
+  show("login",login.status,{authenticated:true,tokenIssued:true,tokenPreview:token.slice(0,22)+"…"});
+  const before=await call("/api/admin/audit","GET",undefined,token);
+  show("rbac",before.status,{expectedStatus:403,actualStatus:before.status,result:before.data,passed:before.status===403});
+  const logout=await call("/api/auth/logout","POST",{},token);
+  show("logout",logout.status,logout.data);
+  const replay=await call("/api/admin/audit","GET",undefined,token);
+  show("replay",replay.status,{expectedStatus:401,actualStatus:replay.status,result:replay.data,passed:replay.status===401&&replay.data.error==="TOKEN_REVOKED"});
+  $("summary").textContent="Completed. Check each HTTP result below; expected sequence: 201 → 200 → 403 → 200 → 401.";
+ }catch(err){$("summary").textContent="Stopped: "+err.message}
+};
+$("clear").onclick=()=>{["register","login","rbac","logout","replay"].forEach(id=>$(id).textContent="Not run");$("summary").textContent="Results cleared."};
+</script></body></html>

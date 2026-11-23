@@ -33,7 +33,7 @@ jobs:
       - name: Build React frontend
         run: npm run build --prefix task5_rest_api_react_frontend/frontend
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 

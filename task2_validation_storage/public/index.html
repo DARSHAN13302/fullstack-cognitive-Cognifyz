@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task 2 — Inline Validation &amp; Server Storage (v7.0)</title>
+</head>
+<body style="font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; padding: 2rem;">
+  <main style="max-width: 620px; margin: 0 auto; background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 2rem;">
+    <h1 style="margin-top: 0; color: #1e3a8a;">Task 2: Dual Client &amp; Server Validation</h1>
+    <form id="regForm" novalidate>
+      <label for="username" style="display:block;font-weight:600;margin-top:1rem;">Username (3–24 alphanumeric)</label>
+      <input id="username" name="username" style="width:100%;padding:0.6rem;border:1px solid #94a3b8;border-radius:4px;" required />
+      <label for="email" style="display:block;font-weight:600;margin-top:1rem;">Email</label>
+      <input id="email" name="email" type="email" style="width:100%;padding:0.6rem;border:1px solid #94a3b8;border-radius:4px;" required />
+      <label for="age" style="display:block;font-weight:600;margin-top:1rem;">Age (18–99)</label>
+      <input id="age" name="age" type="number" style="width:100%;padding:0.6rem;border:1px solid #94a3b8;border-radius:4px;" required />
+      <button type="submit" style="margin-top:1.2rem;padding:0.7rem 1.2rem;background:#1d4ed8;color:#fff;border:none;border-radius:4px;cursor:pointer;">Validate &amp; Store</button>
+    </form>
+    <p id="status" role="status" aria-live="polite" style="margin-top:1rem;font-weight:600;"></p>
+  </main>
+  <script>
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const age = Number(document.getElementById('age').value);
+      const status = document.getElementById('status');
+      if (!/^[a-zA-Z0-9_]{3,24}$/.test(username)) { status.textContent = 'Client Error: Username must be 3-24 alphanumeric chars.'; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = 'Client Error: Invalid email format.'; return; }
+      if (Number.isNaN(age) || age < 18 || age > 99) { status.textContent = 'Client Error: Age must be between 18 and 99.'; return; }
+      const res = await fetch('/api/validate-store', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, email, age }) });
+      const data = await res.json();
+      status.textContent = res.ok ? `Stored record #${data.record.id}` : `Server Error: ${data.errors.join(', ')}`;
+    });
+  </script>
+</body>
+</html>

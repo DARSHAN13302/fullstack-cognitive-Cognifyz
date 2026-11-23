@@ -1,0 +1,72 @@
+{
+  "standard": [
+    "ISO/IEC/IEEE 14764:2022",
+    "ISO/IEC/IEEE 12207:2026"
+  ],
+  "version": "7.1.0",
+  "generatedAt": "2026-11-23T04:59:44.652Z",
+  "complianceScorePct": 100,
+  "status": "COMPLIANT",
+  "metrics": {
+    "jsAndJsxFiles": 29,
+    "totalCodeLines": 1404,
+    "avgLinesPerModule": 48,
+    "automatedTestSuites": 9
+  },
+  "checks": [
+    {
+      "stage": "1. Maintenance Process (ISO 14764)",
+      "weight": 12,
+      "passed": true,
+      "evidence": "governance/MAINTENANCE_PROCESS_ISO_14764.md"
+    },
+    {
+      "stage": "2. Governance & Code Ownership",
+      "weight": 10,
+      "passed": true,
+      "evidence": ".github/CODEOWNERS + TRACEABILITY_AND_RISK_MATRIX.md"
+    },
+    {
+      "stage": "3. Version Control Policy",
+      "weight": 12,
+      "passed": true,
+      "evidence": "governance/VERSION_CONTROL_POLICY.md"
+    },
+    {
+      "stage": "4. Code Quality & Security Controls",
+      "weight": 12,
+      "passed": true,
+      "evidence": ".eslintrc.json + SECURITY.md + shared/policy.rego"
+    },
+    {
+      "stage": "5. Change Control & Impact Analysis",
+      "weight": 12,
+      "passed": true,
+      "evidence": "CHANGE_CONTROL_AND_IMPACT_ANALYSIS.md + PR template"
+    },
+    {
+      "stage": "6. Living Documentation & API Spec",
+      "weight": 10,
+      "passed": true,
+      "evidence": "openapi/openapi-v7.yaml + CHANGELOG.md"
+    },
+    {
+      "stage": "7. Measurement & Continuous Scorecard",
+      "weight": 10,
+      "passed": true,
+      "evidence": "Automated verification & scorecard scripts"
+    },
+    {
+      "stage": "8. Operational Readiness & CI/CD",
+      "weight": 11,
+      "passed": true,
+      "evidence": "CI workflow + Node 24 Dockerfile + k6 benchmark"
+    },
+    {
+      "stage": "9. Compliance, SBOM & EOL Disposal",
+      "weight": 11,
+      "passed": true,
+      "evidence": "EOL Disposal Standard + CycloneDX SBOM + .nvmrc (24)"
+    }
+  ]
+}

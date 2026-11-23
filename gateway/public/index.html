@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full-Stack Cognitive v7.2 — Unified 8-Task Gateway</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 2rem; }
+    main { max-width: 960px; margin: 0 auto; }
+    h1 { margin-top: 0; color: #38bdf8; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .tile { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1.25rem; }
+    .tile h2 { margin: 0 0 0.5rem; font-size: 1.05rem; color: #93c5fd; }
+    code { color: #6ee7b7; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Full-Stack Cognitive v7.2 — Unified Gateway</h1>
+    <p>Single-entry production gateway exposing all 8 internship tasks, OWASP headers, W3C tracing, Prometheus <code>/metrics</code>, SHA-256 <code>/audit/verify</code>, and the Neuro-Symbolic <code>/api/task8/decide</code> brain.</p>
+    <div class="grid">
+      <div class="tile"><h2>Task 1 · SSR Intake</h2><code>POST /api/task1/submit</code></div>
+      <div class="tile"><h2>Task 2 · Dual Validation</h2><code>POST /api/task2/validate</code></div>
+      <div class="tile"><h2>Task 3 · Responsive UI</h2><code>GET /api/task3/verify</code></div>
+      <div class="tile"><h2>Task 4 · Entropy &amp; SPA</h2><code>POST /api/task4/strength</code></div>
+      <div class="tile"><h2>Task 5 · REST CRUD + React</h2><code>GET/POST /api/task5/items</code></div>
+      <div class="tile"><h2>Task 6 · Auth + JWT Revoke</h2><code>POST /api/task6/login</code></div>
+      <div class="tile"><h2>Task 7 · PKCE + Rate Limit</h2><code>GET /api/task7/pkce</code></div>
+      <div class="tile"><h2>Task 8 · Cache + Brain</h2><code>POST /api/task8/decide</code></div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "fullstack-internship-cognitive-v7",
+  "version": "7.2.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "workspaces": [
+    "task1_html_ssr_express",
+    "task2_validation_storage",
+    "task3_responsive_bootstrap_ui",
+    "task4_dynamic_dom_spa",
+    "task5_rest_api_react_frontend",
+    "task6_database_jwt_rbac",
+    "task7_oauth_external_api_ratelimit",
+    "task8_redis_queue_cache_cognitive"
+  ],
+  "scripts": {
+    "verify:all": "node scripts/run_v7_verification.js",
+    "start": "node gateway/server.js",
+    "test:e2e": "node tests/run_live_http_e2e.js",
+    "compliance": "node scripts/run_iso_compliance_scorecard.js"
+  }
+}

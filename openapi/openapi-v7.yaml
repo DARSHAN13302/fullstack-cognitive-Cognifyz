@@ -1,0 +1,22 @@
+openapi: 3.1.0
+info:
+  title: Full-Stack Cognitive Suite API
+  version: 7.0.0
+paths:
+  /health:
+    get:
+      summary: Service readiness and W3C traceparent check
+      responses:
+        '200': { description: Healthy }
+  /api/items:
+    get:
+      summary: List Task 5 CRUD items
+      responses:
+        '200': { description: OK }
+  /api/decide:
+    post:
+      summary: Invoke Task 8 Neuro-Symbolic Cognitive Decision Engine
+      responses:
+        '200': { description: Decision returned (AUTO_APPROVED or REQUIRES_HUMAN_APPROVAL) }
+        '400': { description: Blocked by OWASP LLM01 guardrail }
+        '403': { description: Denied by symbolic OPA policy }

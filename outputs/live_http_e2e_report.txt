@@ -1,0 +1,12 @@
+=== Live HTTP End-to-End Integration Test (v7.2 Unified Gateway) ===
+Timestamp: 2026-11-23T04:59:44.455Z
+[PASS] GET /health -> 200 + OWASP headers + W3C traceparent
+[PASS] Task 1 POST /api/task1/submit -> 201 + PII masked + audit hash
+[PASS] Task 2 POST /api/task2/validate -> 201
+[PASS] Task 3 GET /api/task3/verify -> 200 + Bootstrap/CSS verified
+[PASS] Task 4 POST /api/task4/strength -> 200 (Strong + SPA route)
+[PASS] Task 5 POST /api/task5/items -> 201
+[PASS] Task 6 Auth -> JWT RBAC 200 -> Logout JTI Revoke -> 401 TOKEN_REVOKED
+[PASS] Task 7 PKCE S256 + Sliding-Window Rate Limiter -> 429 enforced
+[PASS] Task 8 Cache MISS->HIT + Queue 202 + Cognitive Brain (400/403/200 HITL)
+[PASS] GET /audit/verify -> valid (5 chained hashes) + /metrics active

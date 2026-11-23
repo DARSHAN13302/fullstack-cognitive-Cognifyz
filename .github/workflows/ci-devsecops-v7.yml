@@ -1,0 +1,35 @@
+name: DevSecOps CI, Cognitive & ISO Compliance Gate (v7.1)
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  verify-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run v7.1 Verification & STLC Suites
+        run: node scripts/run_v7_verification.js
+      - name: Run ISO 14764/12207 Continuous Compliance Scorecard
+        run: node scripts/run_iso_compliance_scorecard.js
+      - name: Run Python MCP Tool Server Self-Test
+        run: python3 shared/mcp_tools_server.py --self-test
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript, python
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

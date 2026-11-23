@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: fullstack_v7
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: change_me_local
+    ports: ["5432:5432"]
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  task8_cognitive:
+    build: .
+    ports: ["3008:3008"]
+    depends_on: [postgres, redis]

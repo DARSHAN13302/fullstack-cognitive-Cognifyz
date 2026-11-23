@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: fullstack-cognitive-v7-gateway
+    runtime: node
+    plan: free
+    buildCommand: "node scripts/run_v7_verification.js && node tests/run_live_http_e2e.js"
+    startCommand: "node gateway/server.js"
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Submission Confirmed</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Intake Confirmed</h1>
+    <p><strong>Name:</strong> <%= submission.fullName %></p>
+    <p><strong>Email:</strong> <%= submission.maskedEmail %></p>
+    <p><strong>Track:</strong> <%= submission.track %></p>
+    <p><strong>Audit Hash:</strong> <code><%= submission.auditHash %></code></p>
+    <a href="/">Submit Another</a>
+  </main>
+</body>
+</html>

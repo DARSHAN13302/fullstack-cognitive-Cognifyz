@@ -1,0 +1,6 @@
+@import url('/tokens.css');
+body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+.hero-banner { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #f8fafc; padding: 4rem 1.5rem; }
+.feature-tile { border-top: 3px solid var(--accent); padding: 1.5rem 0; transition: transform 200ms ease, border-color 200ms ease; }
+.feature-tile:hover { transform: translateY(-4px); border-top-color: var(--ok); }
+@media (max-width: 768px) { .hero-banner { padding: 2.5rem 1rem; } }

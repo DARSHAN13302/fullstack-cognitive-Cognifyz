@@ -1,0 +1,5 @@
+body { font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; margin: 0; padding: 2rem; }
+nav a { margin-right: 1rem; font-weight: 600; color: #1d4ed8; text-decoration: none; }
+main { max-width: 660px; margin: 1.5rem auto; background: #fff; padding: 2rem; border: 1px solid #cbd5e1; border-radius: 8px; }
+.meter { height: 8px; background: #e2e8f0; margin-top: 0.5rem; border-radius: 4px; overflow: hidden; }
+.meter-fill { height: 100%; width: 0; transition: width 200ms ease; background: #1d4ed8; }
